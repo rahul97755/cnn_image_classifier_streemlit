@@ -1,8 +1,10 @@
 import numpy as np
-from PIL import Image
+from tensorflow.keras.preprocessing import image
 
-def preprocess_image(image: Image.Image, target_size=(32, 32)):
-    """Resize, normalize and expand image dimensions."""
-    img = image.resize(target_size)
-    img_array = np.array(img) / 255.0
-    return np.expand_dims(img_array, axis=0)
+def preprocess_image(img):
+    """Resize, normalize and expand dimensions for CNN input"""
+    img = img.resize((32, 32))
+    img_array = image.img_to_array(img)
+    img_array = img_array / 255.0
+    img_array = np.expand_dims(img_array, axis=0)
+    return img_array

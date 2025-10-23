@@ -1,8 +1,7 @@
-import tensorflow as tf
 import streamlit as st
+from tensorflow.keras.models import load_model
 
 @st.cache_resource
-def load_model(model_path: str):
-    """Load and cache the trained CNN model."""
-    model = tf.keras.models.load_model(model_path)
-    return model
+def load_model():
+    """Load and cache CNN model"""
+    return load_model("models/cifar10_cnn_augmented.h5")

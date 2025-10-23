@@ -2,27 +2,22 @@ import streamlit as st
 from PIL import Image
 from src.model_loader import load_model
 from src.preprocessing import preprocess_image
-from src.predict import predict
+from src.predict import predict_image
 
-# --- Config ---
-st.set_page_config(page_title="CNN Image Classifier", page_icon="🧠")
+st.set_page_config(page_title="🧠 CIFAR-10 CNN Classifier", layout="centered")
+st.title("🧠 CIFAR-10 CNN Image Classifier")
+st.markdown("Upload an image (32x32) and classify it into one of 10 categories using a trained CNN model.")
 
-# --- Load model ---
-model_path = "models/cifar10_cnn_augmented.h5"
-model = load_model(model_path)
+model = load_model()
 
-# --- UI ---
-st.title("🧠 CIFAR-10 Image Classifier")
-st.write("Upload an image — model will predict among 10 categories.")
-
-uploaded_file = st.file_uploader("📤 Upload Image", type=["jpg", "jpeg", "png"])
+uploaded_file = st.file_uploader("📸 Upload Image (jpg/png)", type=["jpg", "jpeg", "png"])
 
 if uploaded_file:
-    image = Image.open(uploaded_file).convert('RGB')
+    image = Image.open(uploaded_file).convert("RGB")
     st.image(image, caption="Uploaded Image", use_container_width=True)
-    img_array = preprocess_image(image)
-    predicted_class, confidence = predict(model, img_array)
 
-    st.markdown(f"### 🏷️ Prediction: **{predicted_class.upper()}**")
-    st.progress(confidence)
-    st.caption(f"Confidence: {confidence:.2f}")
+    st.write("🔄 Predicting...")
+    processed = preprocess_image(image)
+    label, confidence = predict_image(model, processed)
+
+    st.success(f"✅ Prediction: **{label}** ({confidence:.2f}% confidence)")

@@ -1,5 +1,5 @@
 import streamlit as st
-from tensorflow.keras.models import load_model keras_load_model # type: ignore
+from tensorflow.keras.models import load_model as keras_load_model # type: ignore
 
 @st.cache_resource
 def load_trained_model():

@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 from src.model_loader import load_model
 from src.preprocessing import preprocess_image
-from src.predict import predict_image
+from src.predict import predict
 
 st.set_page_config(page_title="🧠 CIFAR-10 CNN Classifier", layout="centered")
 st.title("🧠 CIFAR-10 CNN Image Classifier")
@@ -18,6 +18,6 @@ if uploaded_file:
 
     st.write("🔄 Predicting...")
     processed = preprocess_image(image)
-    label, confidence = predict_image(model, processed)
+    label, confidence = predict(model, processed)
 
     st.success(f"✅ Prediction: **{label}** ({confidence:.2f}% confidence)")
